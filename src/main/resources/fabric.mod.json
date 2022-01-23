@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "wynnglance",
+  "version": "${version}",
+  "name": "Wynnglance",
+  "description": "Item rarity underlays for Wynncraft perfectionists",
+  "authors": ["OceanMongrel"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/wynnglance/icon.png",
+  "environment": "client",
+  "mixins": ["wynnglance.mixins.json"],
+  "depends": {"minecraft": "1.18.1"}
+}
