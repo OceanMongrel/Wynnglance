@@ -1,18 +1,12 @@
 package om.wynnglance.mixin;
 
-import om.wynnglance.WynnglanceClient;
-
-import com.mojang.blaze3d.systems.RenderSystem;
-
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.Identifier;
 
+import om.wynnglance.RarityMatcher;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -48,44 +42,9 @@ public abstract class HandledScreenMixin {
 
         for (RarityMatcher rarityMatcher : rarityMatchers) {
             if (rarityMatcher.canApply(display)) {
-                rarityMatcher.apply(display);
+                rarityMatcher.apply(matrices, slot);
                 return;
             }
-        }
-    }
-
-    public static class RarityMatcher {
-        private static final Identifier TEXTURE = new Identifier("wynnglance", "textures/aura.png");
-
-        private final String[] matches;
-        private final float r;
-        private final float g;
-        private final float b;
-
-        public RarityMatcher(float r, float g, float b, String... matches) {
-            this.matches = matches;
-            this.r = r;
-            this.g = g;
-            this.b = b;
-        }
-
-        public void apply(String display) {
-            RenderSystem.enableBlend();
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderColor(r, g, b, 0.5F);
-            RenderSystem.setShaderTexture(0, TEXTURE);
-            DrawableHelper.drawTexture(matrices, slot.x - 1, slot.y - 1, 0, 0, 18, 18, 18, 18);
-            RenderSystem.disableBlend();
-        }
-
-        public boolean canApply(String display) {
-            for (String i : matches) {
-                if (display.contains(i)) {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }
