@@ -10,5 +10,5 @@
   "icon": "assets/wynnglance/icon.png",
   "environment": "client",
   "mixins": ["wynnglance.mixins.json"],
-  "depends": {"minecraft": "1.18.1"}
+  "depends": {"minecraft": "1.18.x"}
 }
